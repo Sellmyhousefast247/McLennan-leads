@@ -252,24 +252,37 @@ class EagleWebRecorder:
             page.goto(f"{REC_BASE}/web/", wait_until="domcontentloaded",
                       timeout=30000)
 
+    @staticmethod
+    def _enter_date(page, selector: str, value: str) -> None:
+        """Type a date with real keystrokes. The EagleWeb date field is a
+        datepicker that only commits a manually-entered value on keydown/
+        keyup, so page.fill() (which sets .value without keystrokes) leaves
+        the search unfiltered -- the value must be TYPED."""
+        loc = page.locator(selector)
+        loc.click()
+        loc.press("Control+A")
+        loc.press("Delete")
+        loc.type(value, delay=40)
+        page.keyboard.press("Escape")   # dismiss the datepicker popup
+
     def _run_one(self, page, code: str, label: str,
                  start: datetime, end: datetime) -> str:
         page.goto(self.SEARCH_URL, wait_until="domcontentloaded", timeout=45000)
         page.wait_for_selector("input[name=field_RecDateID_DOT_StartDate]",
                                timeout=30000)
-        page.fill("input[name=field_RecDateID_DOT_StartDate]",
-                  start.strftime("%m/%d/%Y"))
-        page.fill("input[name=field_RecDateID_DOT_EndDate]",
-                  end.strftime("%m/%d/%Y"))
+        self._enter_date(page, "input[name=field_RecDateID_DOT_StartDate]",
+                         start.strftime("%m/%d/%Y"))
+        self._enter_date(page, "input[name=field_RecDateID_DOT_EndDate]",
+                         end.strftime("%m/%d/%Y"))
         # document-type autocomplete: type then pick the exact option
         dt = page.locator("input[name=field_selfservice_documentTypes]")
         dt.click()
-        dt.fill("")
-        dt.type(label, delay=25)
-        page.wait_for_timeout(1500)
+        dt.press("Control+A")
+        dt.press("Delete")
+        dt.type(label, delay=30)
+        page.wait_for_timeout(1600)
         picked = False
-        for sel in (f"li:has-text('{label}')", "ul.ui-autocomplete li",
-                    "li[role=option]"):
+        for sel in ("ul.ui-autocomplete li", "li[role=option]", "li"):
             try:
                 opt = page.locator(sel).filter(has_text=label).first
                 if opt.count():
@@ -279,18 +292,16 @@ class EagleWebRecorder:
             except Exception:
                 continue
         if not picked:
-            # fall back to keyboard select of first suggestion
             dt.press("ArrowDown")
             dt.press("Enter")
-        page.wait_for_timeout(400)
+        page.wait_for_timeout(500)
         page.click("#searchButton")
-        # wait for results rows or the no-results banner
         try:
             page.wait_for_selector(
                 ".ss-search-row, text=No results found", timeout=45000)
         except Exception:
             pass
-        page.wait_for_timeout(600)
+        page.wait_for_timeout(700)
         return page.content()
 
     @staticmethod
@@ -306,10 +317,11 @@ class EagleWebRecorder:
             if not h1:
                 continue
             head = _norm_ws(h1.get_text(" "))
-            # "2026030952 • ABSTRACT OF JUDGMENT" -> doc_num is the leading token
+            # "2026030952 • ABSTRACT OF JUDGMENT" -> doc_num + row doc-type
             m = re.match(r"([0-9A-Za-z][0-9A-Za-z\-]*)\s*[•·.\-]?\s*(.*)$",
                          head)
             doc_num = m.group(1) if m else head.split()[0]
+            row_type = _norm_ws(m.group(2)) if m else ""
             filed = grantor = ""
             grantees, legals = [], []
             for col in row.select(".searchResultFourColumn"):
@@ -328,24 +340,25 @@ class EagleWebRecorder:
                 elif header.startswith("legal"):
                     legals = vals
             yield {
-                "doc_num": doc_num, "filed": filed, "grantor": grantor,
-                "grantees": grantees, "legal": " / ".join(legals[:2]),
+                "doc_num": doc_num, "row_type": row_type, "filed": filed,
+                "grantor": grantor, "grantees": grantees,
+                "legal": " / ".join(legals[:2]),
             }
 
     def run(self) -> list:
         records = []
         with sync_playwright() as pw:
             browser = pw.chromium.launch(headless=True)
-            ctx = browser.new_context(user_agent=self._UA)
-            page = ctx.new_page()
-            try:
-                self._accept_disclaimer(page)
-            except Exception as exc:
-                log.warning("EagleWeb disclaimer step failed: %s", exc)
-
+            # EagleWeb binds the first search of a session and then serves it
+            # back for later searchResults calls, so a shared page returns
+            # STALE rows for every doc type after the first. Use a fresh
+            # browser context (fresh session + disclaimer) per doc type.
             for code, label, cat, cat_label, days in REC_DOC_TYPES:
                 start = self.end - timedelta(days=days)
+                ctx = browser.new_context(user_agent=self._UA)
+                page = ctx.new_page()
                 try:
+                    self._accept_disclaimer(page)
                     html = self._run_one(page, code, label, start, self.end)
                     pages = self._total_pages(html)
                     rows = list(self._parse_rows(html))
@@ -358,17 +371,25 @@ class EagleWebRecorder:
                             rows.extend(self._parse_rows(page.content()))
                         except Exception:
                             break
+                    # Guard against a stale/wrong result set: keep only rows
+                    # whose own doc-type text matches the type we searched.
+                    lab_u = label.upper()
+                    typed = [r for r in rows if r["row_type"]
+                             and lab_u in r["row_type"].upper()]
+                    if rows and not typed:
+                        log.warning("EagleWeb %-22s: %d rows but none matched "
+                                    "type (stale?) -- skipped", label, len(rows))
+                        rows = []
+                    else:
+                        rows = typed or rows
                     n = 0
                     for row in rows:
                         if not row["doc_num"] or not re.search(r"\d", row["doc_num"]):
                             continue
-                        # The distressed party (property owner) is the party the
-                        # instrument runs against -- the GRANTEE for abstracts of
-                        # judgment, tax/hospital/mechanic/child-support liens, lis
-                        # pendens and trustee notices; the GRANTOR is the creditor /
-                        # plaintiff / taxing authority. Prefer the non-entity party
-                        # so reversed-indexed filings (e.g. some federal tax liens)
-                        # still resolve to the individual.
+                        # Distressed party (owner) is the GRANTEE on these
+                        # instruments; GRANTOR is the creditor/plaintiff/taxing
+                        # authority. Prefer the non-entity party so reversed-
+                        # indexed filings still resolve to the individual.
                         owner, counter = _pick_owner(
                             row["grantor"], row["grantees"])
                         records.append(LeadRecord(
@@ -380,11 +401,12 @@ class EagleWebRecorder:
                             clerk_url=self.SEARCH_URL,
                         ))
                         n += 1
-                    log.info("EagleWeb %-22s: %d records (%d page[s])",
-                             label, n, pages)
+                    log.info("EagleWeb %-22s: %d records (%d page[s], %d raw)",
+                             label, n, pages, len(rows))
                 except Exception as exc:
                     log.warning("EagleWeb search %s failed: %s", label, exc)
-            browser.close()
+                finally:
+                    ctx.close()
         return records
 
 # ---------------------------------------------------------------------------
@@ -404,8 +426,8 @@ ZIP_RE = re.compile(r"\b(WACO|BELLMEAD|HEWITT|WOODWAY|LORENA|ROBINSON|MCGREGOR|"
 SALE_DATE_RE = re.compile(r"(January|February|March|April|May|June|July|August|"
                           r"September|October|November|December)\s+(\d{1,2}),?\s+(20\d{2})", re.I)
 ARCHIVE_RE = re.compile(
-    r'href="(Archive\.aspx\?ADID=(\d+))"[^>]*>\s*([A-Z]+\s+\d+,\s+20\d{2})\s+SALE DATE',
-    re.I)
+    r'href="([^"]*Archive\.aspx\?ADID=(\d+))"[^>]*>\s*(?:<span>\s*)?'
+    r'([A-Z]+\s+\d+,\s+20\d{2})\s+SALE DATE', re.I)
 
 
 def fetch_fc_pdf_records(session) -> list:
@@ -438,7 +460,7 @@ def fetch_fc_pdf_records(session) -> list:
         import pytesseract
 
         for sd, href, adid, saletxt in chosen:
-            pdf_url = f"{FC_SITE}/{href}"
+            pdf_url = f"{FC_SITE}/{href.lstrip('/')}"
             try:
                 pdf_bytes = session.get(pdf_url, timeout=180).content
             except Exception as exc:
