@@ -252,37 +252,27 @@ class EagleWebRecorder:
             page.goto(f"{REC_BASE}/web/", wait_until="domcontentloaded",
                       timeout=30000)
 
-    @staticmethod
-    def _enter_date(page, selector: str, value: str) -> None:
-        """Type a date with real keystrokes. The EagleWeb date field is a
-        datepicker that only commits a manually-entered value on keydown/
-        keyup, so page.fill() (which sets .value without keystrokes) leaves
-        the search unfiltered -- the value must be TYPED."""
-        loc = page.locator(selector)
-        loc.click()
-        loc.press("Control+A")
-        loc.press("Delete")
-        loc.type(value, delay=40)
-        page.keyboard.press("Escape")   # dismiss the datepicker popup
-
     def _run_one(self, page, code: str, label: str,
                  start: datetime, end: datetime) -> str:
         page.goto(self.SEARCH_URL, wait_until="domcontentloaded", timeout=45000)
         page.wait_for_selector("input[name=field_RecDateID_DOT_StartDate]",
                                timeout=30000)
-        self._enter_date(page, "input[name=field_RecDateID_DOT_StartDate]",
-                         start.strftime("%m/%d/%Y"))
-        self._enter_date(page, "input[name=field_RecDateID_DOT_EndDate]",
-                         end.strftime("%m/%d/%Y"))
+        # Plain fill: proven to return rows in headless. (A keystroke-typing
+        # date variant broke the search entirely, returning 0 rows.) The
+        # date filter may be loose, which only widens results.
+        page.fill("input[name=field_RecDateID_DOT_StartDate]",
+                  start.strftime("%m/%d/%Y"))
+        page.fill("input[name=field_RecDateID_DOT_EndDate]",
+                  end.strftime("%m/%d/%Y"))
         # document-type autocomplete: type then pick the exact option
         dt = page.locator("input[name=field_selfservice_documentTypes]")
         dt.click()
-        dt.press("Control+A")
-        dt.press("Delete")
-        dt.type(label, delay=30)
+        dt.fill("")
+        dt.type(label, delay=25)
         page.wait_for_timeout(1600)
         picked = False
-        for sel in ("ul.ui-autocomplete li", "li[role=option]", "li"):
+        for sel in (f"li:has-text('{label}')", "ul.ui-autocomplete li",
+                    "li[role=option]"):
             try:
                 opt = page.locator(sel).filter(has_text=label).first
                 if opt.count():
@@ -355,7 +345,8 @@ class EagleWebRecorder:
             # browser context (fresh session + disclaimer) per doc type.
             for code, label, cat, cat_label, days in REC_DOC_TYPES:
                 start = self.end - timedelta(days=days)
-                ctx = browser.new_context(user_agent=self._UA)
+                ctx = browser.new_context(user_agent=self._UA,
+                                          viewport={"width": 1400, "height": 1000})
                 page = ctx.new_page()
                 try:
                     self._accept_disclaimer(page)
