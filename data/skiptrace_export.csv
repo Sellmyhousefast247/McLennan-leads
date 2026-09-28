@@ -1,15 +1,4 @@
 First Name,Last Name,Mailing Address,Mailing City,Mailing State,Mailing Zip,Property Address,Property City,Property State,Property Zip
-Rickey,Thompson,1920 WASHINGTON AVE APT 5104,Waco,TX,76701,,,TX,
-Elizabeth,Rivera,,,TX,,,,TX,
-Donald,Deane,,,TX,,,,TX,
-Blanca,Villarreal,,,TX,,,,TX,
-Tyrone,Kelly,,,TX,,,,TX,
-Benjamin,Lilly,,,TX,,,,TX,
-Emily,Shumaker,,,TX,,,,TX,
-Danny,Brooks,,,TX,,,,TX,
-Hailee,Smith,,,TX,,,,TX,
-Amanda,Barton,1917 MOUNTAINVIEW DR,Waco,TX,76710,1917 Mountainview Dr,Waco,TX,76710
-Santiago,Hernandez,10113 ORCHID LN,Waco,TX,76708,10113 Orchid Ln,Waco,TX,76708
 ,,,,TX,,321 Research Parkway,Waco,TX,76701
 Devon,Dallas,,,TX,,002 Of The Texas Property Code As The Place,Waco,TX,76704
 ,,,,TX,,114 Mesa Park,,TX,
@@ -27,7 +16,7 @@ Jason,Husband,,,TX,,00 Am Or Not Later,Waco,TX,76708
 ,,,,TX,,5177 Richmond Avenue,,TX,
 An Unmarried Woman,Janice Gold,,,TX,,501 Washington Avenue,Waco,TX,76701
 Securing,Melinda Mace A Single Woman,,,TX,,307 N 41St,Waco,TX,76710
-Melinda,Mace,307 N 41ST ST,Waco,TX,76710,307 N 41St,Waco,TX,76710
+,,,,TX,,307 N 41St,Waco,TX,76710
 Joe,Payment,,,TX,,20405 State Highway,Moody,TX,20405
 Gamiz,Thomas,,,TX,,321 Research Parkway,Axtell,TX,76624
 Willard W Davis And,Dianna L Davis,,,TX,,1407 Berkshire St,Waco,TX,76705
@@ -56,9 +45,9 @@ A Single Person,Rickey Thompson Jr.,,,TX,,207 North Bermuda Street,Waco,TX,76705
 ,,,,TX,,3637 Sentara Way,Waco,TX,76701
 Robert,Molnar,,,TX,,7901 Fish Pond Road,Waco,TX,76710
 Angel,Rincon,,,TX,,2026 Deed Of Trust,Woodway,TX,76712
-,,,,TX,,5400 Bosque Blvd,Waco,TX,76710
-Angel,Rincon,,,TX,,2026 Deed Of Trust,Woodway,TX,76712
 Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
+Angel,Rincon,,,TX,,2026 Deed Of Trust,Woodway,TX,76712
+,,,,TX,,5400 Bosque Blvd,Waco,TX,76710
 Crystal,Olvera,,,TX,,2012 Park Ave,Waco,TX,76706
 Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
 Crystal,Olvera,,,TX,,2012 Park Ave,Waco,TX,76706
@@ -78,7 +67,7 @@ Bernabe,Romero,,,TX,,1508 North Valley,Mcgregor,TX,06781
 Lynn,Gerald,,,TX,,908 Day Star Dr,Hewitt,TX,76643
 Gerald,Perry,908 DAY STAR DR,Hewitt,TX,76643,908 Day Star Dr,Hewitt,TX,76643
 Unmarried,Crystal Ann Fortune,,,TX,,167 Berger Rd,West,TX,76691
-Crystal,Fortune,586 HAMILTON DR,Waco,TX,76705,167 Berger Rd,West,TX,76691
+,,,,TX,,167 Berger Rd,West,TX,76691
 Lea,Kelli,,,TX,,2120 Ione Drive,Waco,TX,76708
 Christopher,Burnell,2120 IONE DR,Waco,TX,76708,2120 Ione Drive,Waco,TX,76708
 Husband And Wife Securing,Conrad Corby And Kathleen C Corby,,,TX,,20405 State Highway,Moody,TX,20405
@@ -87,13 +76,13 @@ Husband And Wife Securing,Conrad Corby And Kathleen C Corby,,,TX,,20405 State Hi
 Husband And Wife,Colby E. Edwards And Lisa M. Huette Edwards,,,TX,,00 Deed Of Trust,,TX,
 ,,,,TX,,17100 Gillette Avenue,Waco,TX,76701
 ,,,,TX,,17100 Gillette Ave,,TX,
-,,,,TX,,2125 Charboneau Drive,Waco,TX,76710
+Jackie,Thomas,2126 CHARBONEAU DR,Waco,TX,76710,2125 Charboneau Drive,Waco,TX,76710
 ,,,,TX,,92618 Witness My Hand This Day August,,TX,
 Securing The Payment Of The,Alice M Wright,,,TX,,8950 Cypress Waters Blvd,Waco,TX,76705
 ,,,,TX,,7500 Dallas Pkwy,,TX,
 Wife And,Amanda Suzanne Snow And Mykayl Brande Snow,,,TX,,501 Washington Avenue,Waco,TX,76701
 C,Gabrielle,,,TX,,421 Raby Rd,Eddy,TX,76524
-Gabrielle,Bowers,421 RABY RD,Eddy,TX,76524,421 Raby Rd,Eddy,TX,76524
+,,,,TX,,421 Raby Rd,Eddy,TX,76524
 Ronald,D.,,,TX,,831 Stillwater,Waco,TX,76708
 ,,,,TX,,7500 Dallas Pkwy,,TX,
 Securing,Ronald K Maddox An Unmarried Man,,,TX,,00 Am Or Not Later,Axtell,TX,76624
@@ -113,7 +102,7 @@ Provides That It Secures The,Ronald Maddox And Sally Maddox,,,TX,,999 N.W. Grand
 ,,,,TX,,6101 Condor Drive,,TX,
 Felder,Helen,,,TX,,2616 S 15Th St,Waco,TX,76706
 Helen,Peoples,2616 S 15TH ST,Waco,TX,76706,2616 S 15Th St,Waco,TX,76706
-,,,,TX,,2825 Old Marlin Rd,Waco,TX,76705
+Daniel,Ragsdale,2825 OLD MARLIN RD,Waco,TX,76705,2825 Old Marlin Rd,Waco,TX,76705
 ,,,,TX,,500 N. State College Blvd,,TX,
 ,,,,TX,,3637 Sentara Way,,TX,
 ,,,,TX,,00 Am Or Within Three Hours Thereafter,Crawford,TX,76638
@@ -125,19 +114,3 @@ Mangum,Brandon,,,TX,,2026 Lakeview,Woodway,TX,76712
 ,,,,TX,,,,TX,
 ,,,,TX,,,West,TX,33416
 ,,,,TX,,,,TX,
-Jorge,Ramirez,,,TX,,,,TX,
-Ashia,Sims,,,TX,,,,TX,
-Sandra,Dawson,,,TX,,,,TX,
-A,Coomer,,,TX,,,,TX,
-Monica,Ferguson,,,TX,,,,TX,
-Kayce,Sarver,577 LAKELAND PARK CIR,Mart,TX,76664,,,TX,
-Shawnequa,Wilkerson,,,TX,,,,TX,
-Willie,Starts,,,TX,,,,TX,
-Steven,Rowe,,,TX,,,,TX,
-Eric,Betts,,,TX,,,,TX,
-Chasity,Lyons,,,TX,,,,TX,
-Justin,Bahajak,,,TX,,,,TX,
-Andrew,White,,,TX,,,,TX,
-Corporation,Mpro,,,TX,,,,TX,
-David,Kirkland,,,TX,,,,TX,
-Jakeyszia,Horton,,,TX,,,,TX,
