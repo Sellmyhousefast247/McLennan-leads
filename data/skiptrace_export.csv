@@ -1,6 +1,6 @@
 First Name,Last Name,Mailing Address,Mailing City,Mailing State,Mailing Zip,Property Address,Property City,Property State,Property Zip
-Amy Byrd.,Devan Musick And Wife,,,TX,,501 Washington Avenue,Waco,TX,76701
-"Sr. And Wife, Loretta Harris.",Ronald Harris,,,TX,,1508 North Valley,Waco,TX,76707
+,,,,TX,,60 Degrees 00 Minutes 00 Seconds East,Waco,TX,76708
+,,,,TX,,500 N. State College Blvd,,TX,
 ,,,,TX,,321 Research Parkway,Waco,TX,76701
 Devon,Dallas,,,TX,,002 Of The Texas Property Code As The Place,Waco,TX,76704
 ,,,,TX,,114 Mesa Park,,TX,
@@ -35,7 +35,7 @@ Provides That It Secures Th,David Sanders And Deidre Sanders,,,TX,,28 In Block 2
 An Unmarried Man Securing Payment Of The Ind,Gilbert Beckham,,,TX,,20405 State Highway,Moody,TX,20405
 ,,,,TX,,3501 Olympus Boulevard,,TX,
 Wife And,Alysha Adams And Erich Adams,,,TX,,009343 Assert And Protect,Waco,TX,76701
-,,,,TX,,4109 Austin Avenue,Waco,TX,76710
+Joe,Summers,4109 AUSTIN AVE,Waco,TX,76710,4109 Austin Avenue,Waco,TX,76710
 ,,,,TX,,2026 Earliest,,TX,
 Donny,Washington,,,TX,,5400 Bosque Blvd,Waco,TX,76710
 Richard,Howard.,,,TX,,501 Washington Avenue,Waco,TX,76701
@@ -51,7 +51,7 @@ Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
 Angel,Rincon,,,TX,,2026 Deed Of Trust,Woodway,TX,76712
 Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
 Crystal,Olvera,,,TX,,2012 Park Ave,Waco,TX,76706
-,,,,TX,,5400 Bosque Blvd,Waco,TX,76710
+Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
 Crystal,Olvera,,,TX,,2012 Park Ave,Waco,TX,76706
 Tower,Central,PO BOX 2028,Waco,TX,76703,5400 Bosque Blvd,Waco,TX,76710
 ,,,,TX,,00 A.M. And Not Later,Waco,TX,76701
@@ -69,7 +69,7 @@ Bernabe,Romero,,,TX,,1508 North Valley,Mcgregor,TX,06781
 Lynn,Gerald,,,TX,,908 Day Star Dr,Hewitt,TX,76643
 Gerald,Perry,908 DAY STAR DR,Hewitt,TX,76643,908 Day Star Dr,Hewitt,TX,76643
 Unmarried,Crystal Ann Fortune,,,TX,,167 Berger Rd,West,TX,76691
-,,,,TX,,167 Berger Rd,West,TX,76691
+Crystal,Fortune,586 HAMILTON DR,Waco,TX,76705,167 Berger Rd,West,TX,76691
 Lea,Kelli,,,TX,,2120 Ione Drive,Waco,TX,76708
 Christopher,Burnell,2120 IONE DR,Waco,TX,76708,2120 Ione Drive,Waco,TX,76708
 Husband And Wife Securing,Conrad Corby And Kathleen C Corby,,,TX,,20405 State Highway,Moody,TX,20405
@@ -100,6 +100,8 @@ Anthony,Justin,,,TX,,14800 Laridmark Blvd,,TX,
 Alton,Willie,,,TX,,2508 Wooded Acres Dr,Waco,TX,76710
 ,,,,TX,,3313 W Commercial Blvd,,TX,
 Rector,James,,,TX,,21531 Assert And Protect,Waco,TX,76701
+Amy Byrd.,Devan Musick And Wife,,,TX,,501 Washington Avenue,Waco,TX,76701
+"Sr. And Wife, Loretta Harris.",Ronald Harris,,,TX,,1508 North Valley,Waco,TX,76707
 Provides That It Secures The,Ronald Maddox And Sally Maddox,,,TX,,999 N.W. Grand Blvd,Axtell,TX,76624
 ,,,,TX,,6101 Condor Drive,,TX,
 Felder,Helen,,,TX,,2616 S 15Th St,Waco,TX,76706
